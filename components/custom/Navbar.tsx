@@ -21,9 +21,10 @@ const Navbar = () => {
   return (
     <nav className="bg-background dark text-foreground p-4 shadow-md">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Ticket App</h2>
+        <Button variant={"ghost"}>
+          <h2 className="text-xl font-semibold">🎫 Ticket App</h2>
+        </Button>
 
-        {/* Desktop Nav */}
         <div className="hidden md:block">
           <NavigationMenu>
             <NavigationMenuList className="flex items-center space-x-4">

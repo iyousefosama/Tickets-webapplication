@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -33,7 +33,9 @@ const formSchema = z.object({
 })
 
 const CreateTicket = ({ component }: { component: React.ReactNode }) => {
-  // ✅ Move useForm here INSIDE the component
+  const [open, setOpen] = useState(false)
+  const [dialogKey, setDialogKey] = useState(0)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,14 +47,17 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
+    form.reset()
+    setOpen(false)
+    setDialogKey(prev => prev + 1)
   }
 
   return (
-    <Dialog>
-      <DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
         {component}
       </DialogTrigger>
-      <DialogContent className='dark text-foreground'>
+      <DialogContent key={dialogKey} className="dark text-foreground">
         <DialogHeader>
           <DialogTitle>🎫 Submit a new ticket!</DialogTitle>
           <DialogDescription>
@@ -90,14 +95,14 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
                     </FormItem>
                   )}
                 />
-                <FormField
+                <FormField // TODO: make this a textArea
                   control={form.control}
                   name="description"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Input placeholder="Ticket's detailed description" {...field} />
+                        <Input placeholder="Ticket's detailed description"  {...field} />
                       </FormControl>
                       <FormDescription>
                         A detailed description of your ticket.
