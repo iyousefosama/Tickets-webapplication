@@ -37,12 +37,6 @@ const Navbar = () => {
                   <NavigationMenuLink asChild>
                     <Link href="/view-tickets">View Tickets</Link>
                   </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/update-ticket">Update Ticket</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/delete-ticket">Delete Ticket</Link>
-                  </NavigationMenuLink>
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>

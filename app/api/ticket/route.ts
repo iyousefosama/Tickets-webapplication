@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import connect from "@/lib/db";
 import Tickets from "@/lib/models/tickets";
 const ObjectId = require("mongoose").Types.ObjectId;
@@ -16,7 +16,7 @@ export async function GET() {
     }
 };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     /**
      * Ticket data should be
      * username: string
@@ -35,52 +35,4 @@ export async function POST(request: Request) {
         console.log(error);
         return NextResponse.json({ message: "💢 Their was an error while creating the ticket."}, { status: 500 })
     }
-}
-
-export async function DELETE(request: Request) {
-    try {
-        await connect();
-
-        const { searchParams } = new URL(request.url)
-        const id = searchParams.get("ticketId");
-
-        if (!id || !ObjectId.isValid(id)) {
-            return NextResponse.json({ message: "💢 Invalid ticket id."}, { status: 400 })
-        };
-
-        const ticket = await Tickets.findByIdAndDelete(id);
-
-        if (!ticket) {
-            return NextResponse.json({ message: "💢 Ticket not found."}, { status: 404 })
-        }
-
-        return NextResponse.json({ message: "✅ The ticket was deleted successfully!"}, { status: 200 })
-    } catch (error: any) {
-        return NextResponse.json({ message: "💢 Their was an error while deleting the ticket."}, { status: 500 })
-    }
 };
-
-export async function PATCH(request: Request) {
-    try {
-        await connect();
-
-        const { searchParams } = new URL(request.url)
-        const id = searchParams.get("ticketId");
-
-        if (!id || !ObjectId.isValid(id)) {
-            return NextResponse.json({ message: "💢 Invalid ticket id."}, { status: 400 })
-        };
-        const body = await request.json();
-
-        const ticket = await Tickets.findByIdAndUpdate(id, body, { new: true });
-
-        if (!ticket) {
-            return NextResponse.json({ message: "💢 Ticket not found."}, { status: 404 })
-        }
-
-        return NextResponse.json({ ticket, message: "✅ The ticket was updated successfully!"}, { status: 200 })
-    } catch (error) {
-        return NextResponse.json({ message: "💢 Their was an error while patching the ticket."}, { status: 500 })
-
-    }
-}

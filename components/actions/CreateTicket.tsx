@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -32,9 +33,13 @@ const formSchema = z.object({
   description: z.string().min(2).max(500),
 })
 
+import { useAtom } from 'jotai';
+import { ticketsAtom } from '@/utils/atoms';
+
 const CreateTicket = ({ component }: { component: React.ReactNode }) => {
   const [open, setOpen] = useState(false)
   const [dialogKey, setDialogKey] = useState(0)
+  const [tickets, setTickets] = useAtom(ticketsAtom)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,10 +51,32 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     form.reset()
     setOpen(false)
     setDialogKey(prev => prev + 1)
+
+    const ticketData = {
+      username: values.username,
+      title: values.title,
+      description: values.description,
+    }
+
+    const createTicket = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/api/ticket', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(ticketData),
+        })
+        const data = await res.json()
+        setTickets((prev) => [...prev, data.ticket])
+      } catch (error) {
+        console.error("Error creating ticket:", error)
+      }
+    }
+    createTicket()
   }
 
   return (
@@ -95,14 +122,14 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
                     </FormItem>
                   )}
                 />
-                <FormField // TODO: make this a textArea
+                <FormField
                   control={form.control}
                   name="description"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Input placeholder="Ticket's detailed description"  {...field} />
+                        <Textarea placeholder="Ticket's detailed description"  {...field} />
                       </FormControl>
                       <FormDescription>
                         A detailed description of your ticket.
