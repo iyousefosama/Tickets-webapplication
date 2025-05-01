@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect } from 'react'
-import { FaRegEdit } from "react-icons/fa";
 import { Button } from '@/components/ui/button';
+import UpdateButton from '../actions/UpdateButton';
 import DeleteButton from '@/components/actions/DeleteButton';
 import { ticketsAtom } from '@/utils/atoms';
 import { useAtom } from 'jotai';
@@ -34,9 +34,7 @@ const TicketsList = () => {
                     <p className='text-sm text-gray-500'>Created at: {new Date(ticket.createdAt).toLocaleDateString()}</p>
                     <p className='text-sm text-gray-500'>Status: {ticket.status == "open" ? (<span className='text-green-500'>Open</span>) : <span className='text-red-500'>Closed</span>}</p>
                     <div className='flex justify-end float-right mt-2 gap-4'>
-                        <Button variant={"secondary"}>
-                            <FaRegEdit className='inline-block mr-2' /> Edit
-                        </Button>
+                        <UpdateButton ticket={ticket} />
                         <DeleteButton ticket={ticket} />
                     </div>
                 </div>

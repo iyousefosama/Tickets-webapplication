@@ -51,16 +51,12 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    form.reset()
-    setOpen(false)
-    setDialogKey(prev => prev + 1)
-
     const ticketData = {
       username: values.username,
       title: values.title,
       description: values.description,
     }
-
+  
     const createTicket = async () => {
       try {
         const res = await fetch('http://localhost:3000/api/ticket', {
@@ -70,14 +66,20 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
           },
           body: JSON.stringify(ticketData),
         })
+  
         const data = await res.json()
         setTickets((prev) => [...prev, data.ticket])
+        form.reset()
+        setOpen(false) // Only close after successful submission
+        setDialogKey(prev => prev + 1)
       } catch (error) {
         console.error("Error creating ticket:", error)
       }
     }
+  
     createTicket()
   }
+  
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
