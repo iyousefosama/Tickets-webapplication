@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js tickets full-stack application
+The uses next.js and mongodb to achieve a smooth performance for making and editing tickets without alot complixity in the code
+and for front-end modern looking, used shadcn.
 
-## Getting Started
+![Home](https://github.com/user-attachments/assets/a2f61886-ae61-428f-9181-97535307bab4)
+![PopUp-for-creatingTickets](https://github.com/user-attachments/assets/b7bc43c6-60a5-47df-8d7e-0771dd61fdf6)
+![View](https://github.com/user-attachments/assets/7ad94290-b297-423f-bd1c-93a80562b926)
 
-First, run the development server:
 
-```bash
+# Running the application
+## Install the required dependencies using bun(preferred) or npm
+to start, please **fill** the following:
+
+📁create `.env` file with the following field:
+```
+MONGO_URI=
+```
+place the preferred mongodb url to connect to.
+
+then
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Star the repo if you find it helpfull pleeease. ❤
