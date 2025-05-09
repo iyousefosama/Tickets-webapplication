@@ -12,11 +12,15 @@ import {
 } from "@/components/ui/navigation-menu"
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 import { Menu, X } from 'lucide-react'
+import { FaSignInAlt } from "react-icons/fa";
 import { Button } from '@/components/ui/button'
 import CreateTicket from '../actions/CreateTicket';
+import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const { data: session } = useSession();
+  console.log(session);
 
   return (
     <nav className="bg-background dark text-foreground p-4 shadow-md">
@@ -44,16 +48,28 @@ const Navbar = () => {
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/about" passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>About</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link href="/contact" passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>Contact</NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
+              {session ? (
+                <>
+                  <NavigationMenuItem>
+                    <Link href="/api/auth/signout" passHref>
+                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                        Sign Out
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  <p className='flex items-center space-x-2'>
+                    <span className="text-sm font-semibold">👋 Welcome, {session.user?.name}</span>
+                  </p>
+                </>
+              ) : (
+                <NavigationMenuItem>
+                  <Link href="/api/auth/signin" passHref>
+                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                      Sign In
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              )}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -70,8 +86,9 @@ const Navbar = () => {
       {isOpen && (
         <div className="flex flex-col mt-4 space-y-2 md:hidden">
           <Link href="/" className="px-4 py-2 rounded hover:bg-muted">Home</Link>
-          <Link href="/about" className="px-4 py-2 rounded hover:bg-muted">About</Link>
-          <Link href="/contact" className="px-4 py-2 rounded hover:bg-muted">Contact</Link>
+          <Link href="/api/auth/signin" className="px-4 py-2 rounded hover:bg-muted">
+            Sign In
+          </Link>
 
           <div className="px-4 pt-2 border-t">
             <p className="text-sm font-semibold mb-1">Manage Tickets</p>

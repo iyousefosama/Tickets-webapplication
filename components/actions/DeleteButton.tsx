@@ -6,9 +6,11 @@ import { MdDelete } from "react-icons/md";
 import { ticket } from '@/utils/types';
 import { useAtom } from 'jotai';
 import { ticketsAtom } from '@/utils/atoms';
+import { useSession } from 'next-auth/react';
 
 const DeleteButton = ({ ticket }: { ticket: ticket}) => {
     const [tickets, setTickets] = useAtom(ticketsAtom);
+    const { data: session } = useSession();
 
     const onDelete = async (id: string) => {
         try {
@@ -33,7 +35,7 @@ const DeleteButton = ({ ticket }: { ticket: ticket}) => {
     }
 
     return (
-        <Button variant={"destructive"} onClick={() => onDelete(ticket._id)}>
+        <Button variant={"destructive"} className='hover:bg-red-300 hover:scale-105' onClick={() => onDelete(ticket._id)} disabled={session?.user?.email !== ticket.email && session?.user?.email == process.env.ADMIN_EMAIL}>
             <MdDelete className='inline-block mr-2' /> Delete
         </Button>
     )

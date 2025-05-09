@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { ticketsAtom } from '@/utils/atoms';
 import { useAtom } from 'jotai';
 import { ticket } from '@/utils/types';
+import { useSession } from 'next-auth/react';
 
 const UpdateButton = ({ ticket }: { ticket: ticket}) => {
     const [tickets, setTickets] = useAtom(ticketsAtom);
+    const { data: session } = useSession();
 
     const onUpdate = async (id: string) => {
         try {
@@ -31,10 +33,9 @@ const UpdateButton = ({ ticket }: { ticket: ticket}) => {
         } catch (error) {
             console.error("Error updating ticket:", error);
         }
-
     }
   return (
-    <Button onClick={() => onUpdate(ticket._id)} variant={"secondary"}>
+    <Button onClick={() => onUpdate(ticket._id)} variant={"secondary"} disabled={session?.user?.email !== ticket.email && session?.user?.email == process.env.ADMIN_EMAIL} className='hover:bg-blue-300 hover:scale-105'>
         <FaRegEdit className='inline-block mr-2'/> Change Status
     </Button>
   )

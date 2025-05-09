@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from 'react'
-import { Button } from '@/components/ui/button';
 import UpdateButton from '../actions/UpdateButton';
 import DeleteButton from '@/components/actions/DeleteButton';
 import { ticketsAtom } from '@/utils/atoms';
