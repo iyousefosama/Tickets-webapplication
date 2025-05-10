@@ -13,7 +13,7 @@ const TicketsList = () => {
 
     useEffect(() => {
         const fetchTickets = async() => {
-            const res = await fetch('http://localhost:3000/api/ticket');
+            const res = await fetch('/api/ticket');
             const data = await res.json();
             setTickets(data);
         }

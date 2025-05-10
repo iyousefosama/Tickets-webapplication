@@ -67,7 +67,7 @@ const CreateTicket = ({ component }: { component: React.ReactNode }) => {
     setIsSubmitting(true)
 
     try {
-      const res = await fetch('http://localhost:3000/api/ticket', {
+      const res = await fetch('/api/ticket', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

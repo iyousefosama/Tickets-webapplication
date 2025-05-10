@@ -14,7 +14,7 @@ const UpdateButton = ({ ticket }: { ticket: ticket}) => {
 
     const onUpdate = async (id: string) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/ticket/${id}`, {
+            const res = await fetch(`/api/ticket/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

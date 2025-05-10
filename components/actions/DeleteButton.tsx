@@ -14,7 +14,7 @@ const DeleteButton = ({ ticket }: { ticket: ticket}) => {
 
     const onDelete = async (id: string) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/ticket/${id}`, {
+            const res = await fetch(`/api/ticket/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
